@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Image Upscaler</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🔼 AI Image Upscaler</h1>
+    <p>Upload an image and choose 2x or 4x upscale</p>
+    
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" required>
+      <div class="scale-buttons">
+        <label><input type="radio" name="scale" value="2" checked> 2x (200%)</label>
+        <label><input type="radio" name="scale" value="4"> 4x (400%)</label>
+      </div>
+      <button type="submit">🚀 Upscale</button>
+    </form>
+
+    <p id="status"></p>
+  </div>
+
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      document.getElementById('status').textContent = "⏳ Processing...";
+
+      const res = await fetch('/upscale', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (res.ok) {
+        const blob = await res.blob();
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'upscaled_image.jpg';
+        link.click();
+        document.getElementById('status').textContent = "✅ Done!";
+      } else {
+        document.getElementById('status').textContent = "❌ Failed to process image.";
+      }
+    });
+  </script>
+</body>
+</html>
