@@ -9,12 +9,12 @@
   <div class="container">
     <h1>🔼 AI Image Upscaler</h1>
     <p>Upload an image and choose 2x or 4x upscale</p>
-    
+
     <form id="uploadForm" enctype="multipart/form-data">
       <input type="file" name="image" accept="image/*" required>
       <div class="scale-buttons">
-        <label><input type="radio" name="scale" value="2" checked> 2x (200%)</label>
-        <label><input type="radio" name="scale" value="4"> 4x (400%)</label>
+        <label><input type="radio" name="scale" value="2" checked> 2x</label>
+        <label><input type="radio" name="scale" value="4"> 4x</label>
       </div>
       <button type="submit">🚀 Upscale</button>
     </form>
@@ -41,7 +41,7 @@
         link.click();
         document.getElementById('status').textContent = "✅ Done!";
       } else {
-        document.getElementById('status').textContent = "❌ Failed to process image.";
+        document.getElementById('status').textContent = await res.text();
       }
     });
   </script>
